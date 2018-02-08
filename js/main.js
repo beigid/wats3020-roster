@@ -7,25 +7,24 @@ class Person {
   }
 }
 
-
 // Students class extends from Person class
 class Student extends Person {
   constructor(name, email) {
     // super to run rpevious constructor
     super(name, email);
-    this.attendence = [];
+    this.attendance = [];
   }
-  // Method created to calculate attendence of student. Recorded into above array.
-  calculateAttendence() {
-    if (this.attendence.length > 0) {
-      // Initialize counter to 0. for conditional, takes every item in this.attendence array. mark has whatever value is for that item. 
+  // Method created to calculate attendance of student. Recorded into above array.
+  calculateAttendance() {
+    if (this.attendance.length > 0) {
+      // Initialize counter to 0. for conditional, takes every item in this.attendance array. mark has whatever value is for that item. 
       let counter = 0;
-      for (let mark of this.attendence) {
+      for (let mark of this.attendance) {
         counter = counter + mark;
       }
       //Used to calculate average and multiply by 100 for a percentage value.
-      let attendencePercentage = counter / this.attendence.length * 100;
-      return `${attendencePercantage}%`;
+      let attendancePercentage = counter / this.attendance.length * 100;
+      return `${attendancePercentage}%`;
     } else {
       return "0%";
     }
@@ -36,11 +35,11 @@ class Student extends Person {
 class Teacher extends Person {
   constructor(name, email, honorific) {
     super(name, email);
-    this.horrific = honorific;
+    this.honorific = honorific;
   }
 }
 
-// TODO: Set up our Course class so we can run the whole roster from it.
+
 class Course {
   constructor(courseCode, courseTitle, courseDescription) {
     this.code = courseCode;
@@ -50,46 +49,35 @@ class Course {
     this.students = [];
   }
 
-  /////////////////////////////////////////
-  // TODO: ADD the `addStudent()` method /////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
-  //
-  // Create a method called `addStudent()` that prompts the user for
-  // information required to create a new `Student` object (`name`, `email`)
-  // and does so, then adds the student to the `this.students` Array. Be sure
-  // to update the roster display by calling `updateRoster()`. You will need
-  // to reference the Class instance using `this` as a parameter for
-  // `updateRoster()`, so it might look like this: `updateRoster(this)`.
+// Method created to prompt user for information and adds to student array above. 
+ addStudent() {
+   let name = prompt("Student's Full Name");
+   let email = prompt("Student Email");
+   let newStudent = new Student (name, email);
+   this.students.push(newStudent);
+   updateRoster(this);
+ }
 
+// Method created to promopt teacher information 
+ setTeacher() {
+   let name = prompt("Teacher name");
+   let email = prompt("Teacher email");
+   let honorific = prompt("Honorific (Dr, Prof, Mr. Ms.)");
+   this.teacher = new Teacher(name, email, honorific);
+   updateRoster(this);
+ }
 
-  /////////////////////////////////////////
-  // TODO: ADD the `setTeacher()` method /////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
-  //
-  // Create a method called `setTeacher()` that prompts the user for the
-  // information required to create a `Teacher` object (`name`, `email`) and
-  // does so, then sets the `this.teacher` property equal to the new `Teacher` object.
-
-
-  /////////////////////////////////////////
-  // TODO: ADD `markAttendance()` method /////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////
-  //
-  // TODO: Create a method to mark a student's attendance called `markAttendance()`.
-  // This method should accept a parameter called `username` containing the
-  // `username` that will match the `username` property on the `Student` object.
-
-  // TODO: The FIRST step to create a functioning `markAttendance()` method is
-  // to retreive the `Student` object out of the `this.students` Array. You
-  // can use the `this.findStudent()` method (provided below) to accomplish
-  // that goal. Note that you will also have to handle two cases: The default
-  // behavior should be to mark the student present. The alternate behavior
-  // should be to mark the student absent.
-
-  // TODO: Now that we have retrieved the specific `Student` object we want
-  // to work with, we can use the appropriate method on the `Student` object
-  // to record the attendance.
-
+  // Method created to updat attendance based on whether present or absent is clicked.
+  markAttendance(username, status = "present") {
+    let student = this.findStudent(username);
+    if (status === "present") {
+      student.attendance.push(1);
+    } else {
+      student.attendance.push(0);
+    }
+      updateRoster(this);
+  }
+  
 
 
   //////////////////////////////////////////////
